@@ -11,10 +11,10 @@ namespace BeaterDemo {
         public Const.SFX hitSound;
         public string enemyTag;
         public string hitName;
-        private long hitID;
+        private int hitID;
 
         private void Start() {
-            hitID = hitName.GetHashCode() + TimeUtils.CurrentUnixTime();
+            hitID = hitName.GetHashCode();
             hitCollider.enabled = false;
         }
 

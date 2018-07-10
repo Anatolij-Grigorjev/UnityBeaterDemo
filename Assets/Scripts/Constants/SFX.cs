@@ -1,4 +1,4 @@
-namespace Const
+namespace BeaterDemo.Const
 {
     public enum SFX
     {
