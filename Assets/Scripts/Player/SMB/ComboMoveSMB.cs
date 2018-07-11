@@ -39,7 +39,7 @@ namespace BeaterDemo.SMB
 
         public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex, AnimatorControllerPlayable controller) {
             currentFrameCounter++;
-            if (currentFrameCounter > colliderStartWaitFrames)
+            
         }
     }
 }
