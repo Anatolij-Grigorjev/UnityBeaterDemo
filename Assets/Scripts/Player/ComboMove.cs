@@ -27,6 +27,10 @@ namespace BeaterDemo {
             hitCollider.enabled = false;
         }
 
+        public bool ColliderEnabled() {
+            return hitCollider.enabled;
+        }
+
         //hurt other if they are a character and remain within our trigger
         private void OnTriggerStay2D(Collider2D other) {
             

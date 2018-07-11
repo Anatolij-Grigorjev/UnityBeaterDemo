@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace BeaterDemo
 {
-    public class AudioSystem
+    public class AudioSystem: HistoryAwareSingleton<AudioSystem>
     {
         
     }
