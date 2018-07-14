@@ -11,6 +11,9 @@ namespace BeaterDemo {
         public Const.SFX hitSound;
         public string enemyTag;
         public string hitName;
+        public bool lastHit;
+        public string setTrigger;
+
         private int hitID;
 
         private void Start() {
@@ -21,6 +24,7 @@ namespace BeaterDemo {
 
         public void EnableCollider() {
             hitCollider.enabled = true;
+            ResetNextActionTrigger();
         }
 
         public void DisableCollider() {
@@ -31,12 +35,41 @@ namespace BeaterDemo {
             return hitCollider.enabled;
         }
 
+        private void ResetNextActionTrigger() {
+            setTrigger = null;
+        }
+
+        
+        public void ConsumeNextActionTrigger() {
+            string triggerValue = null;
+            if (setTrigger != null) {
+                triggerValue = string.Copy(setTrigger);
+                setTrigger = null;
+            }
+
+            return triggerValue;
+        }
+
         //hurt other if they are a character and remain within our trigger
         private void OnTriggerStay2D(Collider2D other) {
             
             if (other != null && other.CompareTag(enemyTag)) {
                 //do the pain
             }
+        }
+
+        void Update() {
+
+            if(!lastHit) {
+
+                if (Input.getButton("NormalAttack")) {
+                    setTrigger = HitTriggers.TRIGGER_NORMAL_ATTACK;
+                } 
+                if (Input.getButton("SpecialAttack")) {
+                    setTrigger = HitTriggers.TRIGGER_SPECIAL_ATTACK;
+                }
+            }
+
         }
     }
 }

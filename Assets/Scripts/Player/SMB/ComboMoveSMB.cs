@@ -32,6 +32,7 @@ namespace BeaterDemo.SMB
                 logger.Error(String.Format("No move found for desription string {0}, id: {1}!", comboMoveName, comboMoveID))
                 
             }
+            
             if (colliderStartWaitFrames < 0 && moveCache != null) {
                 moveCache.EnableCollider();
             }
@@ -40,6 +41,12 @@ namespace BeaterDemo.SMB
         public override  void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex, AnimatorControllerPlayable controller) {
             if (moveCache != null) {
                 moveCache.DisableCollider();
+
+                var nextTrigger = moveCache.ConsumeNextActionTrigger();
+                if (nextTrigger != null) {
+                    animator.setTrigger(nextTrigger);
+                }
+
                 moveCache = null;
             }
         }
@@ -48,11 +55,11 @@ namespace BeaterDemo.SMB
             currentFrameCounter++;
             
             if (moveCache != null) {
-                if (colliderStartWaitFrames < currentFrameCounter && !moveCache.hitCollider.enabled) {
+                if (colliderStartWaitFrames < currentFrameCounter && !moveCache.ColliderEnabled()) {
                     moveCache.EnableCollider();
                 }
 
-                if (colliderEndAfterFrames < currentFrameCounter && moveCache.hitCollider.enabled) {
+                if (colliderEndAfterFrames < currentFrameCounter && moveCache.ColliderEnabled()) {
                     moveCache.DisableCollider();
                 }
             }
