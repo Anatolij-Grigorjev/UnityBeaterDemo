@@ -17,7 +17,7 @@ namespace BeaterDemo.SMB
         private ComboMove moveCache; //cache updated every time animation is entered
 
         public ComboMoveSMB(): base() {
-            if (comboMoveName.isEmpty) {
+            if (String.IsNullOrEmpty(comboMoveName)) {
                 comboMoveID = -1;
             } else {
                 comboMoveID = comboMoveName.GetHashCode();
