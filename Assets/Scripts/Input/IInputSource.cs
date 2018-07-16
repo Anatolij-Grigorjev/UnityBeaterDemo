@@ -13,7 +13,7 @@ namespace BeaterDemo.Input
         /// <param name="InputEvent[]">The InputEvent objects array to put gathered events into.
         /// This array is not resized if there are too many events to put into it</param>
         /// <returns>The actual number of events newly placed into the array</returns>
-        int GetInputEvents(out T[] inputEvents);
+        int GetInputEvents(ref T[] inputEvents);
     }
 
 }

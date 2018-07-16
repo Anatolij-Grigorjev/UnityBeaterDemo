@@ -29,7 +29,7 @@ namespace BeaterDemo.SMB
             var charTypeMoves = ComboMovesRegistry.Instance.getCharTypeMoves(characterType);
 
             if (comboMoveID != -1 && !charTypeMoves.TryGetValue(comboMoveID, out moveCache)) {
-                logger.Error(String.Format("No move found for desription string {0}, id: {1}!", comboMoveName, comboMoveID))
+                logger.Error(String.Format("No move found for desription string {0}, id: {1}!", comboMoveName, comboMoveID));
                 
             }
             
@@ -44,7 +44,7 @@ namespace BeaterDemo.SMB
 
                 var nextTrigger = moveCache.ConsumeNextActionTrigger();
                 if (nextTrigger != null) {
-                    animator.setTrigger(nextTrigger);
+                    animator.SetTrigger(nextTrigger);
                 }
 
                 moveCache = null;

@@ -6,10 +6,9 @@ namespace BeaterDemo
 {
     public class WorldController: HistoryAwareSingleton<WorldController>
     {
-        
-        protected override onAwake() {
 
-            
+        protected override void OnAwake() {
+
         }
 
     }

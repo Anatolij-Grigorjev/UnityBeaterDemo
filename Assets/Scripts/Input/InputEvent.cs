@@ -9,6 +9,10 @@ namespace BeaterDemo.Input
             InputCommand = cmd;
         }
 
+        public virtual void CopyTo(InputEvent other) {
+            other.InputCommand = this.InputCommand;
+        }
+
     }
 
     public class PlayerInputEvent: InputEvent {
@@ -19,10 +23,14 @@ namespace BeaterDemo.Input
 
         }
 
-        public void CopyTo(out PlayerInputEvent other) {
-            other.InputCommand = this.InputCommand;
-            other.State = this.State;
+        public override void CopyTo(InputEvent other) {
+
+            base.CopyTo(other);
+            if (other is PlayerInputEvent) {
+                ((PlayerInputEvent)other).State = this.State;
+            }
         }
+
     }
 
 }

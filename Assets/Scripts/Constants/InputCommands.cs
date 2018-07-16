@@ -9,7 +9,7 @@ namespace BeaterDemo.Const
 
 
 
-        public static readonly string[] ALL_PLAYER_COMMANDS = {
+        public static string[] ALL_PLAYER_COMMANDS = {
             CMD_LIGHT_ATTACK
         };
     }

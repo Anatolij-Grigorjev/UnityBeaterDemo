@@ -12,17 +12,17 @@ namespace BeaterDemo
 
         }
 
-        protected override boolean ProcessCommand(ref PlayerInputEvent eventTemplate) {
+        protected override bool ProcessCommand(PlayerInputEvent eventTemplate) {
             var cmd = eventTemplate.InputCommand;
-            if (Input.GetButtonDown(cmd)) {
+            if (UnityEngine.Input.GetButtonDown(cmd)) {
                 eventTemplate.State = PlayerCommandStates.JUST_PRESSED;
                 return true;
             }
-            if (Input.GetButton(cmd)) {
+            if (UnityEngine.Input.GetButton(cmd)) {
                 eventTemplate.State = PlayerCommandStates.HELD_DOWN;
                 return true;
             }
-            if (Input.GetButtonUp(cmd)) {
+            if (UnityEngine.Input.GetButtonUp(cmd)) {
                 eventTemplate.State = PlayerCommandStates.JUST_RELEASED;
                 return true;
             }

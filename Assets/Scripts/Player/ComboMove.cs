@@ -40,7 +40,7 @@ namespace BeaterDemo {
         }
 
         
-        public void ConsumeNextActionTrigger() {
+        public string ConsumeNextActionTrigger() {
             string triggerValue = null;
             if (setTrigger != null) {
                 triggerValue = string.Copy(setTrigger);
@@ -62,10 +62,10 @@ namespace BeaterDemo {
 
             if(!lastHit) {
 
-                if (Input.getButton("NormalAttack")) {
+                if (UnityEngine.Input.GetButton("NormalAttack")) {
                     setTrigger = HitTriggers.TRIGGER_NORMAL_ATTACK;
                 } 
-                if (Input.getButton("SpecialAttack")) {
+                if (UnityEngine.Input.GetButton("SpecialAttack")) {
                     setTrigger = HitTriggers.TRIGGER_SPECIAL_ATTACK;
                 }
             }
