@@ -6,6 +6,8 @@ namespace BeaterDemo {
 
     public class ComboMove : MonoBehaviour {
 
+        private static Logger logger = Logger.getInstance(typeof(ComboMove).ToString());
+
         public Collider2D hitCollider;
         public Vector2 hitPush;
         public Const.SFX hitSound;
@@ -15,10 +17,17 @@ namespace BeaterDemo {
         public string setTrigger;
 
         private int hitID;
+        
+        private CharacterController characterController;
 
         private void Start() {
             hitID = hitName.GetHashCode();
             hitCollider.enabled = false;
+            
+            characterController = this.gameObject.FindObjectOfType<CharacterController>();
+            if (characterController == null) {
+                logger.Error("No character controller for ComboMove " + this.ToString());
+            }
         }
 
 
@@ -62,11 +71,14 @@ namespace BeaterDemo {
 
             if(!lastHit) {
 
-                if (UnityEngine.Input.GetButton("NormalAttack")) {
-                    setTrigger = HitTriggers.TRIGGER_NORMAL_ATTACK;
-                } 
-                if (UnityEngine.Input.GetButton("SpecialAttack")) {
-                    setTrigger = HitTriggers.TRIGGER_SPECIAL_ATTACK;
+                InputEvent latestInput = characterController.latestInput;
+                if (latestInput != null) {
+                    if (InputCommands.CMD_LIGHT_ATTACK.Equals(latestInput.Command)) {
+                        setTrigger = HitTriggers.TRIGGER_LIGHT_ATTACK;
+                    } 
+                    if (InputCommands.CMD_HEAVY_ATTACK.Equals(latestInput.Command)) {
+                        setTrigger = HitTriggers.TRIGGER_HEAVY_ATTACK;
+                    }
                 }
             }
 

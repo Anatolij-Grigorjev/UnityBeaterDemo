@@ -12,6 +12,10 @@ namespace BeaterDemo
 
         }
 
+        public PlayerInputSource(ref string[] commandsFilter): base(ref commandsFilter) {
+            
+        }
+
         protected override bool ProcessCommand(PlayerInputEvent eventTemplate) {
             var cmd = eventTemplate.InputCommand;
             if (UnityEngine.Input.GetButtonDown(cmd)) {

@@ -19,6 +19,8 @@ namespace BeaterDemo.Input
 
         public PlayerCommandStates State;
 
+        public PlayerInputEvent(): this(InputCommands.CMD_NOOP);
+
         public PlayerInputEvent(string cmd): base(cmd) {
 
         }
