@@ -18,13 +18,13 @@ namespace BeaterDemo {
 
         private int hitID;
         
-        private CharacterController characterController;
+        private CharacterInputController<InputEvent> characterController;
 
         private void Start() {
             hitID = hitName.GetHashCode();
             hitCollider.enabled = false;
             
-            characterController = this.gameObject.FindObjectOfType<CharacterController>();
+            characterController = this.gameObject.FindObjectOfType<CharacterInputController>();
             if (characterController == null) {
                 logger.Error("No character controller for ComboMove " + this.ToString());
             }
@@ -71,7 +71,7 @@ namespace BeaterDemo {
 
             if(!lastHit) {
 
-                InputEvent latestInput = characterController.latestInput;
+                InputEvent latestInput = characterController.latestAttackInput;
                 if (latestInput != null) {
                     if (InputCommands.CMD_LIGHT_ATTACK.Equals(latestInput.Command)) {
                         setTrigger = HitTriggers.TRIGGER_LIGHT_ATTACK;

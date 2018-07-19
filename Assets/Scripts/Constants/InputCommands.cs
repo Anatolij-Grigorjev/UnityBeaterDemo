@@ -9,11 +9,21 @@ namespace BeaterDemo.Const
 
 
 
+        public static string[] ALL_ATTACK_COMMANDS = {
+            CMD_LIGHT_ATTACK,
+            CMD_HEAVY_ATTACK
+        };
 
         public static string[] ALL_PLAYER_COMMANDS = {
             CMD_LIGHT_ATTACK,
             CMD_HEAVY_ATTACK
         };
+
+
+        public static bool IsAttackCommand(string command) {
+
+            return Array.contains(ALL_ATTACK_COMMANDS, command);
+        }
     }
 
 }
