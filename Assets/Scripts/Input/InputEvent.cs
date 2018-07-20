@@ -1,3 +1,5 @@
+using BeaterDemo.Const;
+
 namespace BeaterDemo.Input
 {
     
@@ -19,7 +21,9 @@ namespace BeaterDemo.Input
 
         public PlayerCommandStates State;
 
-        public PlayerInputEvent(): this(InputCommands.CMD_NOOP);
+        public PlayerInputEvent(): this(InputCommands.CMD_NOOP) {
+
+        }
 
         public PlayerInputEvent(string cmd): base(cmd) {
 

@@ -1,3 +1,5 @@
+using System;
+
 namespace BeaterDemo.Const
 {
     
@@ -22,7 +24,7 @@ namespace BeaterDemo.Const
 
         public static bool IsAttackCommand(string command) {
 
-            return Array.contains(ALL_ATTACK_COMMANDS, command);
+            return Array.Find(ALL_ATTACK_COMMANDS, cmd => cmd.Equals(command)) != null;
         }
     }
 

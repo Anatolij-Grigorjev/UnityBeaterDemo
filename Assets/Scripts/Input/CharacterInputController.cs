@@ -1,3 +1,4 @@
+using BeaterDemo.Const;
 using UnityEngine;
 
 namespace BeaterDemo.Input
@@ -37,10 +38,10 @@ namespace BeaterDemo.Input
             }
         }
 
-        private InputEvent FirstFromEndAttackInput(int totalInputs) {
+        private T FirstFromEndAttackInput(int totalInputs) {
             
             for (int i = totalInputs - 1; i >= 0; i--) {
-                if(InputCommands.IsAttackCommand(latestInputs[i])) {
+                if(InputCommands.IsAttackCommand(latestInputs[i].InputCommand)) {
 
                     return latestInputs[i];
                 }

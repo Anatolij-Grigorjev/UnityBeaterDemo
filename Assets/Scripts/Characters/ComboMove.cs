@@ -1,5 +1,7 @@
 using UnityEngine;
 using System;
+using BeaterDemo.Input;
+using BeaterDemo.Const;
 
 namespace BeaterDemo {
 
@@ -24,7 +26,7 @@ namespace BeaterDemo {
             hitID = hitName.GetHashCode();
             hitCollider.enabled = false;
             
-            characterController = this.gameObject.FindObjectOfType<CharacterInputController>();
+            characterController = this.gameObject.GetComponent<CharacterInputController<InputEvent>>();
             if (characterController == null) {
                 logger.Error("No character controller for ComboMove " + this.ToString());
             }
@@ -73,10 +75,10 @@ namespace BeaterDemo {
 
                 InputEvent latestInput = characterController.latestAttackInput;
                 if (latestInput != null) {
-                    if (InputCommands.CMD_LIGHT_ATTACK.Equals(latestInput.Command)) {
+                    if (InputCommands.CMD_LIGHT_ATTACK.Equals(latestInput.InputCommand)) {
                         setTrigger = HitTriggers.TRIGGER_LIGHT_ATTACK;
                     } 
-                    if (InputCommands.CMD_HEAVY_ATTACK.Equals(latestInput.Command)) {
+                    if (InputCommands.CMD_HEAVY_ATTACK.Equals(latestInput.InputCommand)) {
                         setTrigger = HitTriggers.TRIGGER_HEAVY_ATTACK;
                     }
                 }
