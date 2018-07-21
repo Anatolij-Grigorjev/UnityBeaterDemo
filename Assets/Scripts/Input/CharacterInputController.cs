@@ -5,19 +5,22 @@ namespace BeaterDemo.Input
 {
     public abstract class CharacterInputController<T> : MonoBehaviour where T: InputEvent {
 
-        public const int MAX_INPUTS = 9;
+        public int MAX_INPUTS = 9;
 
-        public IInputSource<T> characterInputSource;
+        public CachedEventInputSource<T> characterInputSource;
         public T[] latestInputs;
 
         [HideInInspector]
         public T latestAttackInput; //latest attack input for any connected combomove
 
-        protected abstract IInputSource<T> createInputSource();
-        protected abstract T newInputEvent();
+        protected abstract CachedEventInputSource<T> createInputSource();
+        protected virtual T newInputEvent() {
+
+            return characterInputSource.CreateTemplateValue(InputCommands.CMD_NOOP);
+        }
         
         protected void Awake() {
-            //filte to movement commands?
+            
             characterInputSource = createInputSource();
             latestInputs = new T[MAX_INPUTS];
             for(int i = 0; i < MAX_INPUTS; i++) {
@@ -26,19 +29,29 @@ namespace BeaterDemo.Input
         }
 
 
-        private void Update() {
+        protected void Update() {
             
             //gather input from source
             int newInputs = characterInputSource.GetInputEvents(ref latestInputs);
             if (newInputs > 0) {
-                //TODO: process received inputs
-
                 //get latest attack input from end of array
                 latestAttackInput = FirstFromEndAttackInput(newInputs);
+
+                //rest of inputs
+                ProcessInputs(newInputs);
             }
         }
 
-        private T FirstFromEndAttackInput(int totalInputs) {
+        /// <summary>
+        /// Process received inputs given we know how many were actually added for processing
+        /// in latestInputs array.
+        /// 
+        /// lastAttackInput is initialized at this point to be the last recorded attack-related input
+        /// </summary>
+        /// <param name="numNewInputs">Number of new inputs added for processing in latestInputs array</param>
+        protected abstract void ProcessInputs(int numNewInputs);
+
+        protected T FirstFromEndAttackInput(int totalInputs) {
             
             for (int i = totalInputs - 1; i >= 0; i--) {
                 if(InputCommands.IsAttackCommand(latestInputs[i].InputCommand)) {

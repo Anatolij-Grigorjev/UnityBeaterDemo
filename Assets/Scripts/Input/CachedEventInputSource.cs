@@ -7,7 +7,7 @@ namespace BeaterDemo.Input
     public abstract class CachedEventInputSource<T>: IInputSource<T> where T : InputEvent {
 
         protected Dictionary<string, T> eventsCache;
-        protected string[] sourceCommands;
+        public string[] sourceCommands;
 
         public CachedEventInputSource(ref string[] sourceCommands) {
             this.sourceCommands = sourceCommands;
@@ -41,7 +41,7 @@ namespace BeaterDemo.Input
         }
 
         protected virtual bool ProcessCommand(T eventTemplate) { return false; }
-        protected virtual T CreateTemplateValue(string command) { return null; }
+        public virtual T CreateTemplateValue(string command) { return null; }
 
     }
 }

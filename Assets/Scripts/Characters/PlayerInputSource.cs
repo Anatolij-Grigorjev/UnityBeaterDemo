@@ -34,7 +34,7 @@ namespace BeaterDemo
             return false;
         }
 
-        protected override PlayerInputEvent CreateTemplateValue(string cmd) {
+        public override PlayerInputEvent CreateTemplateValue(string cmd) {
 
             return new PlayerInputEvent(cmd);
         }
