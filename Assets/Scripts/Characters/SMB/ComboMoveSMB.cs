@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
 
-namespace BeaterDemo.SMB
-{
-    public class ComboMoveSMB: StateMachineBehaviour
-    {
-        private static Logger logger = Logger.getInstance(typeof(ComboMoveSMB).ToString());
+namespace BeaterDemo.SMB {
+    public class ComboMoveSMB : StateMachineBehaviour {
+        private static Logger logger = Logger.getInstance (typeof (ComboMoveSMB).ToString ());
         public Const.CharacterTypes characterType;
         public string comboMoveName = "";
         private int comboMoveID;
@@ -16,51 +14,53 @@ namespace BeaterDemo.SMB
         private int currentFrameCounter = 0;
         private ComboMove moveCache; //cache updated every time animation is entered
 
-        public ComboMoveSMB(): base() {
-            if (String.IsNullOrEmpty(comboMoveName)) {
+        public ComboMoveSMB () : base () {
+            if (String.IsNullOrEmpty (comboMoveName)) {
                 comboMoveID = -1;
             } else {
-                comboMoveID = comboMoveName.GetHashCode();
+                comboMoveID = comboMoveName.GetHashCode ();
             }
         }
 
-        public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
+        public override void OnStateEnter (Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
             currentFrameCounter = 0;
-            var charTypeMoves = ComboMovesRegistry.Instance.getCharTypeMoves(characterType);
+            var charTypeMoves = ComboMovesRegistry.Instance.getCharTypeMoves (characterType);
 
-            if (comboMoveID != -1 && !charTypeMoves.TryGetValue(comboMoveID, out moveCache)) {
-                logger.Error(String.Format("No move found for desription string {0}, id: {1}!", comboMoveName, comboMoveID));
-                
+            if (comboMoveID != -1 && !charTypeMoves.TryGetValue (comboMoveID, out moveCache)) {
+                logger.Error (String.Format ("No move found for desription string {0}, id: {1}!", comboMoveName, comboMoveID));
+
             }
-            
-            if (colliderStartWaitFrames < 0 && moveCache != null) {
-                moveCache.EnableCollider();
+            if (moveCache != null) {
+                if (colliderStartWaitFrames < 0) {
+                    moveCache.EnableCollider ();
+                }
+                moveCache.isActive = true;
             }
         }
 
-        public override  void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex, AnimatorControllerPlayable controller) {
+        public override void OnStateExit (Animator animator, AnimatorStateInfo stateInfo, int layerIndex, AnimatorControllerPlayable controller) {
             if (moveCache != null) {
-                moveCache.DisableCollider();
+                moveCache.DisableCollider ();
 
-                var nextTrigger = moveCache.ConsumeNextActionTrigger();
+                var nextTrigger = moveCache.ConsumeNextActionTrigger ();
                 if (nextTrigger != null) {
-                    animator.SetTrigger(nextTrigger);
+                    animator.SetTrigger (nextTrigger);
                 }
-
+                moveCache.isActive = false;
                 moveCache = null;
             }
         }
 
-        public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex, AnimatorControllerPlayable controller) {
+        public override void OnStateUpdate (Animator animator, AnimatorStateInfo stateInfo, int layerIndex, AnimatorControllerPlayable controller) {
             currentFrameCounter++;
-            
+
             if (moveCache != null) {
-                if (colliderStartWaitFrames < currentFrameCounter && !moveCache.ColliderEnabled()) {
-                    moveCache.EnableCollider();
+                if (colliderStartWaitFrames < currentFrameCounter && !moveCache.ColliderEnabled ()) {
+                    moveCache.EnableCollider ();
                 }
 
-                if (colliderEndAfterFrames < currentFrameCounter && moveCache.ColliderEnabled()) {
-                    moveCache.DisableCollider();
+                if (colliderEndAfterFrames < currentFrameCounter && moveCache.ColliderEnabled ()) {
+                    moveCache.DisableCollider ();
                 }
             }
         }

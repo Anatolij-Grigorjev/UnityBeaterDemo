@@ -10,9 +10,6 @@ namespace BeaterDemo.Input
         public CachedEventInputSource<T> characterInputSource;
         public T[] latestInputs;
 
-        [HideInInspector]
-        public T latestAttackInput; //latest attack input for any connected combomove
-
         protected abstract CachedEventInputSource<T> createInputSource();
         protected virtual T newInputEvent() {
 
@@ -34,9 +31,6 @@ namespace BeaterDemo.Input
             //gather input from source
             int newInputs = characterInputSource.GetInputEvents(ref latestInputs);
             if (newInputs > 0) {
-                //get latest attack input from end of array
-                latestAttackInput = FirstFromEndAttackInput(newInputs);
-
                 //rest of inputs
                 ProcessInputs(newInputs);
             }
@@ -50,18 +44,6 @@ namespace BeaterDemo.Input
         /// </summary>
         /// <param name="numNewInputs">Number of new inputs added for processing in latestInputs array</param>
         protected abstract void ProcessInputs(int numNewInputs);
-
-        protected T FirstFromEndAttackInput(int totalInputs) {
-            
-            for (int i = totalInputs - 1; i >= 0; i--) {
-                if(InputCommands.IsAttackCommand(latestInputs[i].InputCommand)) {
-
-                    return latestInputs[i];
-                }
-            }
-
-            return null;
-        }
 
     }
 }

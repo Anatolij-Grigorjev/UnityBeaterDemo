@@ -12,21 +12,27 @@ namespace BeaterDemo {
 
         public Collider2D hitCollider;
         public Vector2 hitPush;
+        public Const.CharacterTypes characterType;
         public Const.SFX hitSound;
         public string enemyTag;
         public string hitName;
         public bool lastHit;
+        public bool isActive;
         public string setTrigger;
 
         private int hitID;
         
-        private CharacterInputController<InputEvent> characterController;
+        private CharacterAttackInputController<InputEvent> characterController;
 
         private void Start() {
             hitID = hitName.GetHashCode();
+
+            //insert move into registry
+            ComboMovesRegistry.Instance.getCharTypeMoves(characterType).Add(hitID, this);
+
             hitCollider.enabled = false;
             
-            characterController = this.gameObject.GetComponent<CharacterInputController<InputEvent>>();
+            characterController = this.gameObject.GetComponent<CharacterAttackInputController<InputEvent>>();
             if (characterController == null) {
                 logger.Error("No character controller for ComboMove " + this.ToString());
             }
@@ -71,7 +77,7 @@ namespace BeaterDemo {
 
         void Update() {
 
-            if(!lastHit) {
+            if(!lastHit && isActive) {
 
                 InputEvent latestInput = characterController.latestAttackInput;
                 if (latestInput != null) {
@@ -81,6 +87,8 @@ namespace BeaterDemo {
                     if (InputCommands.CMD_HEAVY_ATTACK.Equals(latestInput.InputCommand)) {
                         setTrigger = HitTriggers.TRIGGER_HEAVY_ATTACK;
                     }
+                    //consume attack event after setting trigger
+                    characterController.latestAttackInput = null;
                 }
             }
 

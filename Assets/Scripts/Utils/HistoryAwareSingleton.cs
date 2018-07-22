@@ -2,16 +2,32 @@ using System;
 using UnityEngine;
 
 namespace BeaterDemo {
-    public abstract class HistoryAwareSingleton<T> : MonoBehaviour where T: HistoryAwareSingleton<T> {
+    public abstract class HistoryAwareSingleton<T> : MonoBehaviour where T : HistoryAwareSingleton<T> {
+
+        private static object _lock = new object ();
+
+        private static Logger log = Logger.getInstance(typeof(T).FullName);
+
         public static T Instance {
             get {
-                if (instance != null) {
+                lock (_lock) {
+                    if (instance != null) {
+                        return instance;
+                    }
+
+                    instance = FindObjectOfType<T> ();
+
+                    if (instance == null) {
+                        GameObject freshSingleton = new GameObject(typeof(T).Name + " Singleton");
+                        instance = freshSingleton.AddComponent<T>();
+
+                        DontDestroyOnLoad(freshSingleton); 
+
+                        log.Info("Created singleton " + freshSingleton.name);
+                    }
+
                     return instance;
                 }
-
-                instance = FindObjectOfType<T> ();
-
-                return instance;
             }
         }
 
@@ -23,23 +39,23 @@ namespace BeaterDemo {
             //deal with old instance
             if (Instance != null && Instance != this) {
 
-                FoundOldInstance();
+                FoundOldInstance ();
 
                 old_instance = Instance;
             }
             instance = this as T;
 
-            OnAwake();
+            OnAwake ();
         }
 
-        void Start() {
+        void Start () {
             //deal with old instance
             if (old_instance != null) {
-                PreOldDestroy();
-                Destroy(old_instance);
+                PreOldDestroy ();
+                Destroy (old_instance);
             }
 
-            OnStart();
+            OnStart ();
         }
 
         /// <summary>
@@ -47,18 +63,18 @@ namespace BeaterDemo {
         /// instance already in existence. This method can be used
         /// to salvage bits of the old instance before its destroyed on Start
         /// </summary>
-        protected virtual void FoundOldInstance() {}
+        protected virtual void FoundOldInstance () { }
         /// <summary>
         /// Regular Awake logic goes here, apart from old instance bookeeping
         /// </summary>
-        protected virtual void OnAwake() {}
+        protected virtual void OnAwake () { }
         /// <summary>
         /// Regular Start logic goes here, apart from old instance bookeeping
         /// </summary>
-        protected virtual void OnStart() {}
+        protected virtual void OnStart () { }
         /// <summary>
         /// Called before old instance is destroyd in Start
         /// </summary>
-        protected virtual void PreOldDestroy() {}
+        protected virtual void PreOldDestroy () { }
     }
 }
