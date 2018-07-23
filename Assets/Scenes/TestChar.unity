@@ -182,6 +182,7 @@ MonoBehaviour:
   hitSound: 0
   enemyTag: 
   hitName: Punch2
+  controllerId: axel_controller
   lastHit: 1
   isActive: 0
   setTrigger: 
@@ -202,6 +203,7 @@ MonoBehaviour:
   hitSound: 0
   enemyTag: 
   hitName: Punch1
+  controllerId: axel_controller
   lastHit: 0
   isActive: 0
   setTrigger: 
@@ -217,6 +219,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MAX_INPUTS: 9
+  attackConrollerId: axel_controller
 --- !u!1 &183014240
 GameObject:
   m_ObjectHideFlags: 0

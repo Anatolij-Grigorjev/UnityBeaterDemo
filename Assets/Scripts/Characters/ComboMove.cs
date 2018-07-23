@@ -16,6 +16,7 @@ namespace BeaterDemo {
         public Const.SFX hitSound;
         public string enemyTag;
         public string hitName;
+        public string controllerId;
         public bool lastHit;
         public bool isActive;
         public string setTrigger;
@@ -26,13 +27,12 @@ namespace BeaterDemo {
 
         private void Start() {
             hitID = hitName.GetHashCode();
-
             //insert move into registry
             ComboMovesRegistry.Instance.getCharTypeMoves(characterType).Add(hitID, this);
 
             hitCollider.enabled = false;
             
-            characterController = this.gameObject.GetComponent<CharacterAttackInputController<InputEvent>>();
+            characterController = CharacterAttackInputControllerRegistry.Instance.GetController(controllerId);
             if (characterController == null) {
                 logger.Error("No character controller for ComboMove " + this.ToString());
             }

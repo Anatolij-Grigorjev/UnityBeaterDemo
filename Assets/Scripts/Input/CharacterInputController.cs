@@ -16,7 +16,7 @@ namespace BeaterDemo.Input
             return characterInputSource.CreateTemplateValue(InputCommands.CMD_NOOP);
         }
         
-        protected void Awake() {
+        protected virtual void Awake() {
             
             characterInputSource = createInputSource();
             latestInputs = new T[MAX_INPUTS];
@@ -26,7 +26,7 @@ namespace BeaterDemo.Input
         }
 
 
-        protected void Update() {
+        protected virtual void Update() {
             
             //gather input from source
             int newInputs = characterInputSource.GetInputEvents(ref latestInputs);

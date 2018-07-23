@@ -16,7 +16,7 @@ namespace BeaterDemo
             
         }
 
-        protected override bool ProcessCommand(PlayerInputEvent eventTemplate) {
+        public override bool ProcessCommand(PlayerInputEvent eventTemplate) {
             var cmd = eventTemplate.InputCommand;
             if (UnityEngine.Input.GetButtonDown(cmd)) {
                 eventTemplate.State = PlayerCommandStates.JUST_PRESSED;

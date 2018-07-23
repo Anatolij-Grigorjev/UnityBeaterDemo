@@ -40,8 +40,8 @@ namespace BeaterDemo.Input
             return nextEvent;
         }
 
-        protected virtual bool ProcessCommand(T eventTemplate) { return false; }
-        public virtual T CreateTemplateValue(string command) { return null; }
+        public abstract bool ProcessCommand(T eventTemplate);
+        public abstract T CreateTemplateValue(string command);
 
     }
 }
