@@ -229,7 +229,7 @@ GameObject:
   m_Component:
   - component: {fileID: 183014241}
   m_Layer: 0
-  m_Name: HitColliders
+  m_Name: Hitboxes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

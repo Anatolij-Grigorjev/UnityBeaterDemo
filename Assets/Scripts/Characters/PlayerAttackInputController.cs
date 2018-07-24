@@ -4,7 +4,7 @@ using BeaterDemo.Input;
 namespace BeaterDemo {
     public class PlayerAttackInputController : CharacterAttackInputController<PlayerInputEvent> {
 
-        private class PlayerInputSourceAdapter : CachedEventInputSource<InputEvent>
+        public class PlayerInputSourceAdapter : CachedEventInputSource<InputEvent>
         {
             private PlayerInputSource parent;
 
@@ -24,7 +24,7 @@ namespace BeaterDemo {
             }
         }
 
-        private class PlayerAttackInputControllerAdapter : CharacterAttackInputController<InputEvent>
+        public class PlayerAttackInputControllerAdapter : CharacterAttackInputController<InputEvent>
         {
             private PlayerAttackInputController parent;
 

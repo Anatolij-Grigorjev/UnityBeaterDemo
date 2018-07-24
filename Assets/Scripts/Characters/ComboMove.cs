@@ -33,6 +33,7 @@ namespace BeaterDemo {
             hitCollider.enabled = false;
             
             characterController = CharacterAttackInputControllerRegistry.Instance.GetController(controllerId);
+            var test = characterController.latestAttackInput;
             if (characterController == null) {
                 logger.Error("No character controller for ComboMove " + this.ToString());
             }
