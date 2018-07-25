@@ -2,45 +2,7 @@ using BeaterDemo.Const;
 using BeaterDemo.Input;
 
 namespace BeaterDemo {
-    public class PlayerAttackInputController : CharacterAttackInputController<PlayerInputEvent> {
-
-        public class PlayerInputSourceAdapter : CachedEventInputSource<InputEvent>
-        {
-            private PlayerInputSource parent;
-
-            public PlayerInputSourceAdapter(PlayerInputSource parent) : base(ref parent.sourceCommands)
-            {
-                this.parent = parent;
-            }
-
-            public override InputEvent CreateTemplateValue(string command)
-            {
-                return parent.CreateTemplateValue(command);
-            }
-
-            public override bool ProcessCommand(InputEvent eventTemplate)
-            {
-                return parent.ProcessCommand(new PlayerInputEvent(eventTemplate.InputCommand));
-            }
-        }
-
-        public class PlayerAttackInputControllerAdapter : CharacterAttackInputController<InputEvent>
-        {
-            private PlayerAttackInputController parent;
-
-            public PlayerAttackInputControllerAdapter(PlayerAttackInputController parent) {
-                this.parent = parent;
-            }
-
-            protected override CachedEventInputSource<InputEvent> createInputSource()
-            {
-                return new PlayerInputSourceAdapter(parent.inputSource);
-            }
-
-            protected override void ProcessInputs(int newInputsNum) {
-                parent.ProcessInputs(newInputsNum);
-            }
-        } 
+    public class PlayerAttackInputController : CharacterAttackInputController<PlayerInputEvent>, IAttackInputSource {
 
         public string attackConrollerId;
 
@@ -49,7 +11,7 @@ namespace BeaterDemo {
             base.Awake();
 
             CharacterAttackInputControllerRegistry.Instance.AddAttackInputController(
-                attackConrollerId, new PlayerAttackInputControllerAdapter(this)
+                attackConrollerId, this
             );
         }
 
@@ -64,6 +26,16 @@ namespace BeaterDemo {
             base.ProcessInputs (newInputsNum);
 
             //this has been filtered down to attack commands so for now try to use as is
+        }
+
+        public InputEvent GetLatestAttackInput()
+        {
+            return latestAttackInput;
+        }
+
+        public void ClearLatestAttackInput()
+        {
+            latestAttackInput = null;
         }
     }
 }

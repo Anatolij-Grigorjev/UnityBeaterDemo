@@ -23,7 +23,7 @@ namespace BeaterDemo {
 
         private int hitID;
         
-        private CharacterAttackInputController<InputEvent> characterController;
+        private IAttackInputSource characterController;
 
         private void Start() {
             hitID = hitName.GetHashCode();
@@ -33,7 +33,7 @@ namespace BeaterDemo {
             hitCollider.enabled = false;
             
             characterController = CharacterAttackInputControllerRegistry.Instance.GetController(controllerId);
-            var test = characterController.latestAttackInput;
+            
             if (characterController == null) {
                 logger.Error("No character controller for ComboMove " + this.ToString());
             }
@@ -80,7 +80,7 @@ namespace BeaterDemo {
 
             if(!lastHit && isActive) {
 
-                InputEvent latestInput = characterController.latestAttackInput;
+                InputEvent latestInput = characterController.GetLatestAttackInput();
                 if (latestInput != null) {
                     if (InputCommands.CMD_LIGHT_ATTACK.Equals(latestInput.InputCommand)) {
                         setTrigger = HitTriggers.TRIGGER_LIGHT_ATTACK;
@@ -89,7 +89,7 @@ namespace BeaterDemo {
                         setTrigger = HitTriggers.TRIGGER_HEAVY_ATTACK;
                     }
                     //consume attack event after setting trigger
-                    characterController.latestAttackInput = null;
+                    characterController.ClearLatestAttackInput();
                 }
             }
 

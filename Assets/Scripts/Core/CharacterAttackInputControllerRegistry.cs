@@ -7,27 +7,27 @@ namespace BeaterDemo
     public class CharacterAttackInputControllerRegistry: HistoryAwareSingleton<CharacterAttackInputControllerRegistry>
     {
 
-        private Dictionary<int, CharacterAttackInputController<InputEvent>> mappingById;
+        private Dictionary<int, IAttackInputSource> mappingById;
 
         protected override void OnAwake() {
 
-            mappingById = new Dictionary<int, CharacterAttackInputController<InputEvent>>();
+            mappingById = new Dictionary<int, IAttackInputSource>();
 
 
 
         }
 
-        public void AddAttackInputController(string id, CharacterAttackInputController<InputEvent> controller) {
+        public void AddAttackInputController(string id, IAttackInputSource controller) {
 
             AddAttackInputController(id.GetHashCode(), controller);
         }
 
-        public void AddAttackInputController(int id, CharacterAttackInputController<InputEvent> controller) {
+        public void AddAttackInputController(int id, IAttackInputSource controller) {
 
             mappingById.Add(id, controller);
         }
 
-        public CharacterAttackInputController<InputEvent> GetController(int id) {
+        public IAttackInputSource GetController(int id) {
 
             if (mappingById.ContainsKey(id)) {
 
@@ -37,7 +37,7 @@ namespace BeaterDemo
             }
         }
 
-        public CharacterAttackInputController<InputEvent> GetController(string id) {
+        public IAttackInputSource GetController(string id) {
             return GetController(id.GetHashCode());
         }
         
