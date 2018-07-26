@@ -23,6 +23,10 @@ namespace BeaterDemo {
             return new Logger (identifier, pattern);
         }
 
+        private enum LogLevel {
+            INFO, ERROR
+        }
+
         private string identifier;
         private string pattern;
         private DateTime createdAt;
@@ -38,15 +42,35 @@ namespace BeaterDemo {
         }
 
         public void Info (object msg) {
-            Debug.Log (FormatMessage (msg));
+            
+            Info(msg != null? msg.ToString(): String.Empty);
+        }
+
+        public void Info (string format, params object[] args) {
+            OutInternal(LogLevel.INFO, FormatMessage(String.Format(format, args)));
+        }
+
+        private void OutInternal(LogLevel level, string formatted) {
+            switch(level) {
+                case LogLevel.INFO:
+                    Debug.Log(formatted);
+                    break;
+                case LogLevel.ERROR:
+                    Debug.LogError(formatted);
+                    break;
+            }
         }
 
         public void Error (Exception ex) {
-            Error (ex.ToString ());
+            Error (ex.ToString());
         }
 
         public void Error (object msg) {
-            Debug.LogError (FormatMessage (msg));
+            Error(msg != null? msg.ToString(): String.Empty);
+        }
+
+        public void Error(string format, params object[] args) {
+            OutInternal(LogLevel.ERROR, FormatMessage(String.Format(format, args)));
         }
 
         public override string ToString () {

@@ -8,7 +8,7 @@ namespace BeaterDemo {
 
     public class ComboMove : MonoBehaviour {
 
-        private static Logger logger = Logger.getInstance(typeof(ComboMove).ToString());
+        private Logger logger; 
 
         public Collider2D hitCollider;
         public Vector2 hitPush;
@@ -25,7 +25,12 @@ namespace BeaterDemo {
         
         private IAttackInputSource characterController;
 
+        private void Awake() {
+            logger = Logger.getInstance(String.Format("{0}-{1}-{2}", typeof(ComboMove).ToString(), controllerId, hitName));
+        }
+
         private void Start() {
+
             hitID = hitName.GetHashCode();
             //insert move into registry
             ComboMovesRegistry.Instance.getCharTypeMoves(characterType).Add(hitID, this);
@@ -81,7 +86,9 @@ namespace BeaterDemo {
             if(!lastHit && isActive) {
 
                 InputEvent latestInput = characterController.GetLatestAttackInput();
+                
                 if (latestInput != null) {
+                    logger.Info("Got latest attack input: {0}", latestInput.InputCommand);
                     if (InputCommands.CMD_LIGHT_ATTACK.Equals(latestInput.InputCommand)) {
                         setTrigger = HitTriggers.TRIGGER_LIGHT_ATTACK;
                     } 

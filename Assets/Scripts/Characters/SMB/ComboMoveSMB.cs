@@ -5,7 +5,7 @@ using UnityEngine.Animations;
 
 namespace BeaterDemo.SMB {
     public class ComboMoveSMB : StateMachineBehaviour {
-        private static Logger logger = Logger.getInstance (typeof (ComboMoveSMB).ToString ());
+        private Logger logger;
         public Const.CharacterTypes characterType;
         public string comboMoveName = "";
         private int comboMoveID;
@@ -20,6 +20,8 @@ namespace BeaterDemo.SMB {
             } else {
                 comboMoveID = comboMoveName.GetHashCode ();
             }
+
+            logger = Logger.getInstance (String.Format("{0}-{1}-{2}", typeof (ComboMoveSMB).ToString(), characterType.ToString(), comboMoveName));
         }
 
         public override void OnStateEnter (Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
@@ -27,7 +29,7 @@ namespace BeaterDemo.SMB {
             var charTypeMoves = ComboMovesRegistry.Instance.getCharTypeMoves (characterType);
 
             if (comboMoveID != -1 && !charTypeMoves.TryGetValue (comboMoveID, out moveCache)) {
-                logger.Error (String.Format ("No move found for desription string {0}, id: {1}!", comboMoveName, comboMoveID));
+                logger.Error("No move found for description string {0}, id: {1}!", comboMoveName, comboMoveID);
 
             }
             if (moveCache != null) {
