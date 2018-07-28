@@ -18,7 +18,6 @@ namespace BeaterDemo {
         public string hitName;
         public string controllerId;
         public bool lastHit;
-        public bool firstHit;
         public bool isActive;
         public string setTrigger;
 
@@ -84,7 +83,7 @@ namespace BeaterDemo {
 
         void Update() {
 
-            if((!lastHit && isActive) || firstHit) {
+            if(!lastHit && isActive) {
 
                 InputEvent latestInput = characterController.GetLatestAttackInput();
                 
