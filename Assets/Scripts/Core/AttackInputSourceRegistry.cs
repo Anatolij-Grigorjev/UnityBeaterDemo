@@ -4,7 +4,7 @@ using BeaterDemo.Input;
 
 namespace BeaterDemo
 {
-    public class CharacterAttackInputControllerRegistry: HistoryAwareSingleton<CharacterAttackInputControllerRegistry>
+    public class AttackInputSourceRegistry: HistoryAwareSingleton<AttackInputSourceRegistry>
     {
 
         private Dictionary<int, IAttackInputSource> mappingById;
@@ -17,17 +17,17 @@ namespace BeaterDemo
 
         }
 
-        public void AddAttackInputController(string id, IAttackInputSource controller) {
+        public void AddAttackInputSource(string id, IAttackInputSource controller) {
 
-            AddAttackInputController(id.GetHashCode(), controller);
+            AddAttackInputSource(id.GetHashCode(), controller);
         }
 
-        public void AddAttackInputController(int id, IAttackInputSource controller) {
+        public void AddAttackInputSource(int id, IAttackInputSource controller) {
 
             mappingById.Add(id, controller);
         }
 
-        public IAttackInputSource GetController(int id) {
+        public IAttackInputSource GetAttackInputSource(int id) {
 
             if (mappingById.ContainsKey(id)) {
 
@@ -37,8 +37,8 @@ namespace BeaterDemo
             }
         }
 
-        public IAttackInputSource GetController(string id) {
-            return GetController(id.GetHashCode());
+        public IAttackInputSource GetAttackInputSource(string id) {
+            return GetAttackInputSource(id.GetHashCode());
         }
         
     }

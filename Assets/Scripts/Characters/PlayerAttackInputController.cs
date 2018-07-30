@@ -12,7 +12,7 @@ namespace BeaterDemo {
             inputSource = new PlayerInputSource (ref InputCommands.ALL_ATTACK_COMMANDS);
             base.Awake();
 
-            CharacterAttackInputControllerRegistry.Instance.AddAttackInputController(
+            AttackInputSourceRegistry.Instance.AddAttackInputSource(
                 attackConrollerId, this
             );
         }

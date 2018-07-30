@@ -18,7 +18,7 @@ namespace BeaterDemo {
         public string hitName;
         public string controllerId;
         public bool lastHit;
-        public bool isActive;
+        public bool isPending;
         public string setTrigger;
 
         private int hitID;
@@ -37,7 +37,7 @@ namespace BeaterDemo {
 
             hitCollider.enabled = false;
             
-            characterController = CharacterAttackInputControllerRegistry.Instance.GetController(controllerId);
+            characterController = AttackInputSourceRegistry.Instance.GetAttackInputSource(controllerId);
             
             if (characterController == null) {
                 logger.Error("No character controller for ComboMove " + this.ToString());
@@ -83,7 +83,7 @@ namespace BeaterDemo {
 
         void Update() {
 
-            if(!lastHit && isActive) {
+            if(!lastHit && isPending) {
 
                 InputEvent latestInput = characterController.GetLatestAttackInput();
                 

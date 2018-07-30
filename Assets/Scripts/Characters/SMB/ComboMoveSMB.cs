@@ -36,7 +36,7 @@ namespace BeaterDemo.SMB {
                 if (colliderStartWaitFrames < 0) {
                     moveCache.EnableCollider ();
                 }
-                moveCache.isActive = true;
+                moveCache.isPending = true;
             }
         }
 
@@ -48,7 +48,7 @@ namespace BeaterDemo.SMB {
                 if (nextTrigger != null) {
                     animator.SetTrigger (nextTrigger);
                 }
-                moveCache.isActive = false;
+                moveCache.isPending = false;
                 moveCache = null;
             }
         }

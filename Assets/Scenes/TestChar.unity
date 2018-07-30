@@ -184,7 +184,7 @@ MonoBehaviour:
   hitName: Punch2
   controllerId: axel_controller
   lastHit: 1
-  isActive: 0
+  isPending: 0
   setTrigger: 
 --- !u!114 &84429380
 MonoBehaviour:
@@ -205,7 +205,7 @@ MonoBehaviour:
   hitName: Punch1
   controllerId: axel_controller
   lastHit: 0
-  isActive: 0
+  isPending: 1
   setTrigger: 
 --- !u!114 &84429381
 MonoBehaviour:
