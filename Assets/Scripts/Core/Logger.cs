@@ -8,7 +8,7 @@ namespace BeaterDemo {
         /// Create a new logger configured for a specific identifier with a specific pattern.
         /// Default pattern is  "{0} - [{1}]: {2}".
         /// 
-        /// At 0 current tiem is logged
+        /// At 0 current game time is logged
         /// 
         /// At 1 identifier
         /// 
@@ -32,7 +32,7 @@ namespace BeaterDemo {
         private DateTime createdAt;
 
         private String FormatMessage (object msg) {
-            return String.Format (pattern, DateTime.Now, identifier, msg);
+            return String.Format (pattern, Time.time, identifier, msg);
         }
 
         private Logger (string identifier, string pattern) {
@@ -58,6 +58,12 @@ namespace BeaterDemo {
                 case LogLevel.ERROR:
                     Debug.LogError(formatted);
                     break;
+            }
+        }
+
+        public void AssertNotNull<T>(T thing) {
+            if (thing == null) {
+                Error("!!! instance  of {0} was requested but found null !!!", typeof(T));
             }
         }
 

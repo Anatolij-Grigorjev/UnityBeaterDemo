@@ -9,17 +9,22 @@ namespace BeaterDemo.Input
 
         public CachedEventInputSource<T> characterInputSource;
         public T[] latestInputs;
+        public string inputSourceId;
+        private int inputSourceIdCode;
 
-        protected abstract CachedEventInputSource<T> createInputSource();
         protected virtual T newInputEvent() {
 
             return characterInputSource.CreateTemplateValue(InputCommands.CMD_NOOP);
         }
         
         protected virtual void Awake() {
-            
-            characterInputSource = createInputSource();
+            inputSourceIdCode = inputSourceId.GetHashCode();
             latestInputs = new T[MAX_INPUTS];
+            
+        }
+
+        protected virtual void Start() {
+            characterInputSource = InputSourceRegistry.Instance.GetInputSource<T>(inputSourceIdCode);
             for(int i = 0; i < MAX_INPUTS; i++) {
                 latestInputs[i] = newInputEvent();
             }

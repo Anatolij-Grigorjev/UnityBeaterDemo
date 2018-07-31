@@ -24,6 +24,7 @@ namespace BeaterDemo {
         private int hitID;
         
         private IAttackInputSource characterController;
+        private ComboBoundsController comboBounds;
 
         private void Awake() {
             logger = Logger.getInstance(String.Format("{0}-{1}-{2}", typeof(ComboMove).ToString(), controllerId, hitName));
@@ -39,9 +40,7 @@ namespace BeaterDemo {
             
             characterController = AttackInputSourceRegistry.Instance.GetAttackInputSource(controllerId);
             
-            if (characterController == null) {
-                logger.Error("No character controller for ComboMove " + this.ToString());
-            }
+            logger.AssertNotNull(characterController);
         }
 
 
@@ -100,6 +99,18 @@ namespace BeaterDemo {
                 }
             }
 
+        }
+
+        void FinishHit() {
+
+            isPending = false;
+            if(!lastHit) {
+                comboBounds.ResetComboBounds();
+            }
+        }
+
+        void SetBounds(ComboBoundsController bounds) {
+            comboBounds = bounds;
         }
     }
 }

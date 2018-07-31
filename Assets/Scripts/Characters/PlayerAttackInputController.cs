@@ -9,7 +9,7 @@ namespace BeaterDemo {
         public string attackConrollerId;
 
         protected override void Awake() {
-            inputSource = new PlayerInputSource (ref InputCommands.ALL_ATTACK_COMMANDS);
+            
             base.Awake();
 
             AttackInputSourceRegistry.Instance.AddAttackInputSource(
@@ -18,10 +18,6 @@ namespace BeaterDemo {
         }
 
         public PlayerInputSource inputSource;
-
-        protected override CachedEventInputSource<PlayerInputEvent> createInputSource () {
-            return inputSource;
-        }
 
         protected override void ProcessInputs (int newInputsNum) {
             log.Info("Processing {0} inputs", newInputsNum);

@@ -10,27 +10,34 @@ namespace BeaterDemo
         
         private Logger log = Logger.getInstance(typeof(ComboBoundsController).Name);
 
+        public CharacterTypes cahracterType;
         public Animator animController;
-        public string inputSourceId;
-        private int inputSourceIdCode;
+        public string comboStartId;
+        public string comboEndId;
+
         public bool comboHappening = false;
 
-        protected override CachedEventInputSource<InputEvent> createInputSource()
-        {
-            return InputSourceRegistry.Instance.GetInputSource<InputEvent>(inputSourceIdCode);
-        }
-
         protected override void Awake() {
-            inputSourceIdCode = inputSourceId.GetHashCode();
 
             base.Awake();
+        }
 
-            if (characterInputSource == null) {
-                log.Error("characterInputSource = null!!");
+        protected override void Start() {
+
+            base.Start();
+
+            log.AssertNotNull(characterInputSource);
+            log.AssertNotNull(animController);
+            log.AssertNotNull(comboEndId);
+            ComboMove lastMove;
+            var fetched = ComboMovesRegistry.Instance.
+                getCharTypeMoves(cahracterType).TryGetValue(comboEndId.GetHashCode(), out lastMove);
+            log.AssertNotNull(lastMove);
+
+            if (!lastMove.lastHit) {
+                log.Error("Combo move {0} is not marked as last hit!!!", lastMove.hitName);
             }
-            if(animController == null) {
-                log.Error("animController = null!!");
-            }
+
         }
 
         protected override void ProcessInputs(int newInputsNum) {
@@ -51,6 +58,10 @@ namespace BeaterDemo
 
                 comboHappening = true;
             }
+        }
+
+        public void ResetComboBounds() {
+            comboHappening = false;
         }
     }
 }

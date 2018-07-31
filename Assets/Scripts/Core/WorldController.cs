@@ -1,4 +1,6 @@
 using System;
+using BeaterDemo.Input;
+using BeaterDemo.Const;
 using UnityEngine;
 
 
@@ -8,7 +10,10 @@ namespace BeaterDemo
     {
 
         protected override void OnAwake() {
-
+            InputSourceRegistry.Instance.AddInputSource<PlayerInputEvent>(
+                RegistryKeys.IS_PLAYER_ATTACK, 
+                new PlayerInputSource(ref InputCommands.ALL_ATTACK_COMMANDS)
+            );
         }
 
     }

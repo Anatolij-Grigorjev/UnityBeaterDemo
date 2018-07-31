@@ -2,6 +2,11 @@ using System;
 using UnityEngine;
 
 namespace BeaterDemo {
+    /// <summary>
+    /// Singleton implemnetation that has internal bookeeping logic to deal with a found old instance
+    /// allows copying resources and creating partial new instances from old
+    /// </summary>
+    /// <typeparam name="T">underlying type of the singleton</typeparam>
     public abstract class HistoryAwareSingleton<T> : MonoBehaviour where T : HistoryAwareSingleton<T> {
 
         private static object _lock = new object ();

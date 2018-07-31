@@ -48,7 +48,7 @@ namespace BeaterDemo.SMB {
                 if (nextTrigger != null) {
                     animator.SetTrigger (nextTrigger);
                 }
-                moveCache.isPending = false;
+                
                 moveCache = null;
             }
         }
