@@ -28,13 +28,12 @@ namespace BeaterDemo {
 
         private void Awake() {
             logger = Logger.getInstance(String.Format("{0}-{1}-{2}", typeof(ComboMove).ToString(), controllerId, hitName));
-        }
-
-        private void Start() {
-
             hitID = hitName.GetHashCode();
             //insert move into registry
             ComboMovesRegistry.Instance.getCharTypeMoves(characterType).Add(hitID, this);
+        }
+
+        private void Start() {
 
             hitCollider.enabled = false;
             
@@ -101,10 +100,10 @@ namespace BeaterDemo {
 
         }
 
-        void FinishHit() {
+        public void FinishHit() {
 
             isPending = false;
-            if(!lastHit) {
+            if(lastHit) {
                 comboBounds.ResetComboBounds();
             }
         }

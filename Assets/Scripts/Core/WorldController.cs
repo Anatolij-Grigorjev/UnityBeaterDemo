@@ -10,7 +10,7 @@ namespace BeaterDemo
     {
 
         protected override void OnAwake() {
-            InputSourceRegistry.Instance.AddInputSource<PlayerInputEvent>(
+            InputSourceRegistry.Instance.AddInputSource<InputEvent>(
                 RegistryKeys.IS_PLAYER_ATTACK, 
                 new PlayerInputSource(ref InputCommands.ALL_ATTACK_COMMANDS)
             );

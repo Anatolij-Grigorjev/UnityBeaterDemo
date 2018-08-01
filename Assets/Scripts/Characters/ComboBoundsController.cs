@@ -8,7 +8,7 @@ namespace BeaterDemo
     public class ComboBoundsController: CharacterAttackInputController<InputEvent>
     {
         
-        private Logger log = Logger.getInstance(typeof(ComboBoundsController).Name);
+        private Logger log = Logger.getInstance(typeof(ComboBoundsController).FullName);
 
         public CharacterTypes cahracterType;
         public Animator animController;

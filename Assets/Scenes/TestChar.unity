@@ -125,6 +125,7 @@ GameObject:
   - component: {fileID: 84429381}
   - component: {fileID: 84429380}
   - component: {fileID: 84429379}
+  - component: {fileID: 84429382}
   m_Layer: 0
   m_Name: Axel
   m_TagString: Untagged
@@ -219,7 +220,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MAX_INPUTS: 9
+  inputSourceId: is_axel_attack
   attackConrollerId: axel_controller
+--- !u!114 &84429382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 84429376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d81c4688cd6b6124892c0c7864af2dc9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MAX_INPUTS: 9
+  inputSourceId: is_axel_attack
+  cahracterType: 0
+  animController: {fileID: 84429378}
+  comboStartId: 
+  comboEndId: Punch2
+  comboHappening: 0
 --- !u!1 &183014240
 GameObject:
   m_ObjectHideFlags: 0
@@ -579,3 +599,43 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.78981936, y: 0.25792712}
   m_EdgeRadius: 0
+--- !u!1 &2029254831
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 2029254833}
+  - component: {fileID: 2029254832}
+  m_Layer: 0
+  m_Name: World
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2029254832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2029254831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99ec17d1e18d14946b6a6b82c1c7228f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &2029254833
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2029254831}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

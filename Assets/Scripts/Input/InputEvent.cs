@@ -3,7 +3,7 @@ using BeaterDemo.Const;
 namespace BeaterDemo.Input
 {
     
-    public abstract class InputEvent {
+    public class InputEvent {
 
         public string InputCommand;
 

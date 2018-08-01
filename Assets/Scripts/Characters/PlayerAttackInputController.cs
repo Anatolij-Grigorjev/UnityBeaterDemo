@@ -2,7 +2,7 @@ using BeaterDemo.Const;
 using BeaterDemo.Input;
 
 namespace BeaterDemo {
-    public class PlayerAttackInputController : CharacterAttackInputController<PlayerInputEvent>, IAttackInputSource {
+    public class PlayerAttackInputController : CharacterAttackInputController<InputEvent>, IAttackInputSource {
 
         Logger log = Logger.getInstance(typeof(PlayerAttackInputController).Name);
 

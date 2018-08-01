@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace BeaterDemo
 {
-    public class PlayerInputSource: CachedEventInputSource<PlayerInputEvent> {
+    public class PlayerInputSource: CachedEventInputSource<InputEvent> {
 
         Logger log = Logger.getInstance(typeof(PlayerInputSource).Name);
 
@@ -18,30 +18,30 @@ namespace BeaterDemo
             
         }
 
-        public override bool ProcessCommand(PlayerInputEvent eventTemplate) {
+        public override bool ProcessCommand(InputEvent eventTemplate) {
             var cmd = eventTemplate.InputCommand;
             if (UnityEngine.Input.GetButtonDown(cmd)) {
                 log.Info("Captured PRESSED command {0}", cmd);
-                eventTemplate.State = PlayerCommandStates.JUST_PRESSED;
+                // eventTemplate.State = PlayerCommandStates.JUST_PRESSED;
                 return true;
             }
             if (UnityEngine.Input.GetButton(cmd)) {
                 log.Info("Captured HELD command {0}", cmd);
-                eventTemplate.State = PlayerCommandStates.HELD_DOWN;
+                // eventTemplate.State = PlayerCommandStates.HELD_DOWN;
                 return true;
             }
             if (UnityEngine.Input.GetButtonUp(cmd)) {
                 log.Info("Captured RELEASED command {0}", cmd);
-                eventTemplate.State = PlayerCommandStates.JUST_RELEASED;
+                // eventTemplate.State = PlayerCommandStates.JUST_RELEASED;
                 return true;
             }
 
             return false;
         }
 
-        public override PlayerInputEvent CreateTemplateValue(string cmd) {
+        public override InputEvent CreateTemplateValue(string cmd) {
 
-            return new PlayerInputEvent(cmd);
+            return new InputEvent(cmd);
         }
     }
 }

@@ -5,6 +5,8 @@ namespace BeaterDemo.Input
 {
     public abstract class CharacterInputController<T> : MonoBehaviour where T: InputEvent {
 
+        private Logger log = Logger.getInstance(typeof(CharacterInputController<T>).FullName);
+
         public int MAX_INPUTS = 9;
 
         public CachedEventInputSource<T> characterInputSource;
@@ -25,6 +27,7 @@ namespace BeaterDemo.Input
 
         protected virtual void Start() {
             characterInputSource = InputSourceRegistry.Instance.GetInputSource<T>(inputSourceIdCode);
+            log.AssertNotNull(characterInputSource);
             for(int i = 0; i < MAX_INPUTS; i++) {
                 latestInputs[i] = newInputEvent();
             }

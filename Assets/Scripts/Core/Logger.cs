@@ -63,7 +63,7 @@ namespace BeaterDemo {
 
         public void AssertNotNull<T>(T thing) {
             if (thing == null) {
-                Error("!!! instance  of {0} was requested but found null !!!", typeof(T));
+                Error("!!! instance  of {0} was requested but found null !!!", typeof(T).FullName);
             }
         }
 
@@ -77,6 +77,7 @@ namespace BeaterDemo {
 
         public void Error(string format, params object[] args) {
             OutInternal(LogLevel.ERROR, FormatMessage(String.Format(format, args)));
+            OutInternal(LogLevel.ERROR, FormatMessage(String.Format("Stack: {0}", Environment.StackTrace)));
         }
 
         public override string ToString () {

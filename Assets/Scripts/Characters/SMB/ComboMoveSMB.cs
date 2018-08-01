@@ -5,7 +5,7 @@ using UnityEngine.Animations;
 
 namespace BeaterDemo.SMB {
     public class ComboMoveSMB : StateMachineBehaviour {
-        private Logger logger;
+        private Logger log;
         public Const.CharacterTypes characterType;
         public string comboMoveName = "";
         private int comboMoveID;
@@ -21,7 +21,7 @@ namespace BeaterDemo.SMB {
                 comboMoveID = comboMoveName.GetHashCode ();
             }
 
-            logger = Logger.getInstance (String.Format ("{0}-{1}-{2}", typeof (ComboMoveSMB).ToString (), characterType.ToString (), comboMoveName));
+            log = Logger.getInstance (String.Format ("{0}-{1}-{2}", typeof (ComboMoveSMB).ToString (), characterType.ToString (), comboMoveName));
         }
 
         public override void OnStateEnter (Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
@@ -29,7 +29,7 @@ namespace BeaterDemo.SMB {
             var charTypeMoves = ComboMovesRegistry.Instance.getCharTypeMoves (characterType);
 
             if (comboMoveID != -1 && !charTypeMoves.TryGetValue (comboMoveID, out moveCache)) {
-                logger.Error ("No move found for description string {0}, id: {1}!", comboMoveName, comboMoveID);
+                log.Error ("No move found for description string {0}, id: {1}!", comboMoveName, comboMoveID);
 
             }
             if (moveCache != null) {
@@ -41,6 +41,7 @@ namespace BeaterDemo.SMB {
         }
 
         public override void OnStateExit (Animator animator, AnimatorStateInfo stateInfo, int layerIndex, AnimatorControllerPlayable controller) {
+            log.Info("State exit for {0}", comboMoveName);
             if (moveCache != null) {
                 moveCache.DisableCollider ();
 
@@ -48,7 +49,7 @@ namespace BeaterDemo.SMB {
                 if (nextTrigger != null) {
                     animator.SetTrigger (nextTrigger);
                 }
-                
+                moveCache.FinishHit();
                 moveCache = null;
             }
         }
