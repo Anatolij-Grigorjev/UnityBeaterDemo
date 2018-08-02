@@ -100,15 +100,15 @@ namespace BeaterDemo {
 
         }
 
-        public void FinishHit() {
+        public void FinishHit(bool triggeredMore) {
 
             isPending = false;
-            if(lastHit) {
+            if(lastHit || !triggeredMore) {
                 comboBounds.ResetComboBounds();
             }
         }
 
-        void SetBounds(ComboBoundsController bounds) {
+        public void SetBounds(ComboBoundsController bounds) {
             comboBounds = bounds;
         }
     }

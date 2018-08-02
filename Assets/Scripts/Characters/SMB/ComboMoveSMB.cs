@@ -15,18 +15,18 @@ namespace BeaterDemo.SMB {
         private ComboMove moveCache; //cache updated every time animation is entered
 
         public ComboMoveSMB () : base () {
-            if (String.IsNullOrEmpty (comboMoveName)) {
-                comboMoveID = -1;
-            } else {
-                comboMoveID = comboMoveName.GetHashCode ();
-            }
-
+            
+            comboMoveID = -1;
             log = Logger.getInstance (String.Format ("{0}-{1}-{2}", typeof (ComboMoveSMB).ToString (), characterType.ToString (), comboMoveName));
         }
 
         public override void OnStateEnter (Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
             currentFrameCounter = 0;
+            if (comboMoveID == -1 && !String.IsNullOrEmpty(comboMoveName)) {
+                comboMoveID = comboMoveName.GetHashCode();
+            }
             var charTypeMoves = ComboMovesRegistry.Instance.getCharTypeMoves (characterType);
+            log.Info("Starting move animation, move id: {0}", comboMoveID);
 
             if (comboMoveID != -1 && !charTypeMoves.TryGetValue (comboMoveID, out moveCache)) {
                 log.Error ("No move found for description string {0}, id: {1}!", comboMoveName, comboMoveID);
@@ -37,6 +37,9 @@ namespace BeaterDemo.SMB {
                     moveCache.EnableCollider ();
                 }
                 moveCache.isPending = true;
+                log.Info("move is pending...");
+            } else {
+                log.Info("no move cache!");
             }
         }
 
@@ -46,17 +49,18 @@ namespace BeaterDemo.SMB {
                 moveCache.DisableCollider ();
 
                 var nextTrigger = moveCache.ConsumeNextActionTrigger ();
+                log.Info("extracted trigger: {0}", nextTrigger);
                 if (nextTrigger != null) {
                     animator.SetTrigger (nextTrigger);
                 }
-                moveCache.FinishHit();
+                moveCache.FinishHit(nextTrigger != null);
                 moveCache = null;
             }
         }
 
         public override void OnStateUpdate (Animator animator, AnimatorStateInfo stateInfo, int layerIndex, AnimatorControllerPlayable controller) {
             currentFrameCounter++;
-
+            log.Info("processing frame {0}", currentFrameCounter);
             if (moveCache != null) {
                 if (colliderStartWaitFrames < currentFrameCounter && !moveCache.ColliderEnabled ()) {
                     moveCache.EnableCollider ();

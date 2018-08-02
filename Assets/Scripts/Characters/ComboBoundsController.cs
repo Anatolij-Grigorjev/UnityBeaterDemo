@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using System.Collections.Generic;
 using BeaterDemo.Input;
 using BeaterDemo.Const;
 
@@ -29,15 +30,15 @@ namespace BeaterDemo
             log.AssertNotNull(characterInputSource);
             log.AssertNotNull(animController);
             log.AssertNotNull(comboEndId);
-            ComboMove lastMove;
-            var fetched = ComboMovesRegistry.Instance.
-                getCharTypeMoves(cahracterType).TryGetValue(comboEndId.GetHashCode(), out lastMove);
-            log.AssertNotNull(lastMove);
+            
+            var comboMoves = gameObject.GetComponents<ComboMove>();
+            log.AssertNotNull(comboMoves);
 
-            if (!lastMove.lastHit) {
-                log.Error("Combo move {0} is not marked as last hit!!!", lastMove.hitName);
+            log.Info("setting bounds to {0} moves...", comboMoves.Length);
+            foreach (var move  in comboMoves)
+            {
+                move.SetBounds(this);
             }
-
         }
 
         protected override void ProcessInputs(int newInputsNum) {
@@ -61,6 +62,7 @@ namespace BeaterDemo
         }
 
         public void ResetComboBounds() {
+            log.Info("resetting combo...");
             comboHappening = false;
         }
     }
